@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<input type="button" id="export" value="导出"/>
+		
+		
+		
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script src="js/FileSaver.js-master/src/FileSaver.js" charset="utf-8"></script>
+		<script>
+			/*var FileSaver = require('file-saver');
+			var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
+			FileSaver.saveAs(blob, "hello world.txt");*/
+			$("#export").click(function(){
+			    var content = {"1":1,"2":23};
+			    var arr = "1"+'\t'
+			    arr += "2"+'\t';
+			    arr += '3'+'\n'
+			    arr += '4'+'\t'
+			    arr += '5'+'\t'
+			    var blob = new Blob([JSON.stringify(content)], {type: "text/plain;charset=utf-8"});
+			    var blob2 = new Blob([arr], {type: "text/plain;charset=utf-8"});
+			    saveAs(blob2, "file.xls");//saveAs(blob,filename)
+			    console.log("save")
+			    /*var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
+				saveAs(blob, "hello world.txt");*/		
+			});
+			/*var blob2 = new Blob(["欢迎访问 hangge.com"], {type: "text/plain;charset=utf-8"});
+      		saveAs(blob2, "文件导出测试.txt");*/
+			
+		</script>
+	</body>
+</html>

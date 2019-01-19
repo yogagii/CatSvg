@@ -1,0 +1,84 @@
+<!--狗svg转png-->
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div class="svg-wrap">
+			<!--<embed id="id1" src="https://blockchain-pet-online.cdn.bcebos.com/PET_SVG_56fa6126857e4bb948f24b48773fb13d" width="1000" height="1000" type="image/svg+xml" pluginspage="http://www.adobe.com/svg/viewer/install/" />
+			<embed id="id2" src="json/1.svg" width="1000" height="1000" type="image/svg+xml" pluginspage="http://www.adobe.com/svg/viewer/install/" />-->
+			<!--<img src="https://blockchain-pet-online.cdn.bcebos.com/PET_SVG_56fa6126857e4bb948f24b48773fb13d" alt="example">-->
+			<img src="dogsvg/14.svg" alt="example">
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400px" height="400px"></svg>
+		</div>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script>
+			//var svgdog = ''
+			//$.getJSON("json/doggy.json", function(data) {
+				//var dogs = data.data.petsOnSale
+				//dogs.forEach(function(d){
+					//svgdog+=d.petUrl+' \n '
+					//document.write(d.petUrl+'<br>')
+				//})
+				//console.log(svgdog)
+			//})
+			window.onload = function(){
+			    //获得SVG文档的DOM结构
+			     //var svgdoc = document.getElementById("id2").getSVGDocument();
+			     //console.log(svgdoc)
+			    for(var i = 224; i < 227; i++) {
+					(function(i) { //立刻执行函数
+						setTimeout(function() {
+							$('img')[0].setAttribute('src','dogsvg/'+i+'.svg')
+							setTimeout(function(){
+						    	savesvg(i)
+						    },500)
+						}, (i-224) * 1000);
+					})(i);
+				}
+			    /*savesvg('14')*/
+			    
+			}
+			/*
+			d3.xml("https://blockchain-pet-online.cdn.bcebos.com/PET_SVG_56fa6126857e4bb948f24b48773fb13d.svg", "image/svg+xml", //加载文件  
+			function(xml) {  
+			   document.body.appendChild(xml.documentElement);//添加DOM节点  
+			});*/
+			function savesvg(filename) {
+				//var svgXml = $('.svg-wrap');
+				//var svgXml = $('.svg-wrap');
+				//var svgXml = $('.svg-wrap').html();
+			    //var svgXml = document.getElementById("id2").getSVGDocument();
+				//console.log(svgXml)
+				//console.log(svgXml.html())
+				
+
+				//var image = new Image();
+				//image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(svgXml))); //给图片对象写入base64编码的svg流
+				//image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(${svg}))); //给图片对象写入base64编码的svg流
+				//image.src = 'dogsvg/3.svg'
+				var canvas = document.createElement('canvas'); //准备空画布
+				canvas.width = $('.svg-wrap svg').width();
+				canvas.height = $('.svg-wrap svg').height();
+				//console.log(canvas.width)
+
+				var image = $('img')[0]
+				console.log(image)
+				var context = canvas.getContext('2d'); //取得画布的2d绘图上下文
+				context.drawImage(image, -5, 50);
+
+				var a = document.createElement('a');
+
+				a.download = "dog"+filename + ".png"; //设定下载名称
+				a.href = canvas.toDataURL('image/png'); //将画布内的信息导出为png图片数据
+				a.click(); //点击触发下载
+			}
+			
+			//savesvg('1')
+			
+		</script>
+	</body>
+</html>

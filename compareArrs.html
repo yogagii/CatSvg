@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			function compareArrs(arr1,arr2){
+				for(let i = 0;i<arr1.length;i++){
+					if(Array.isArray(arr1[i])){
+						if (!compareArrs(arr1[i],arr2[i])){
+							return false
+						}
+					}else{
+						if(arr1[i]!=arr2[i]){
+							return false
+						}
+					}
+				}
+				return true
+			}
+			
+			function deepClone(obj) {
+				if(Array.isArray(obj)){
+					let objClone = [];
+					if(obj && typeof obj === "object") {
+						for(key in obj) {
+							if(obj.hasOwnProperty(key)) {
+								if(obj[key] && typeof obj[key] === "object") {
+									objClone[key] = this.deepClone(obj[key]);
+								} else {
+									objClone[key] = obj[key];
+								}
+							}
+						}
+					}
+					return objClone;
+				}else{
+					return obj
+				}
+			}
+			
+			var a1 = [[1,2,3,[1,2,3]],[1,2,4,[1,2,4]]]
+			var a2 = [1,2,3,[1,2,3],[1,3]]
+			var a3 = [4,5,6,[6,6,6]]
+			var a4 = [4,5,6,[6,6,7]]
+			a1.push(deepClone(a3))
+			console.log(a1)
+			//a3.push(7)
+			//console.log(a1)
+			//console.log(a1.indexOf(a3))
+			//console.log(a1)
+			for(var i = 0;i<2;i++){
+				console.log(i)
+				if(compareArrs(a1[i],a4)){
+					console.log('push')
+					a1.push(a4)
+					break;
+				}
+				if(i == 1){
+					console.log('unshift')
+					a1.unshift(a4)
+				}
+			}
+			console.log(a1)
+			//console.log(compareArrs(a1,a2))
+			
+		</script>
+	</body>
+</html>

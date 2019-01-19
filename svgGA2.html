@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script src="js/catsvg.js"></script>
+		<script>
+			console.log($(window).height())
+			console.log($(window).width())
+			var p = ''
+			var svg1 = `<div style="width: 50%;display:inline-block;"><svg viewBox="0 0 3000 3000">
+			<g clip-path="url(#kittyClipPath)">
+				<g id="tailFur">`
+			var svg2 =`<g clip-path="url(#tailFurClipPath)">`
+			var svg3 = `</g>
+				</g>`
+			var svg4 = `</g>
+			<g clip-path="url(#kittyClipPath)">
+				<g id="bodyFur">`
+			var svg5 = `</g>`
+			var svg6 = `</g>`
+			var svg7 = `</svg></div>`
+			
+			//pattern = catsvg["pattern"]["2"]
+			body = catsvg["body"]["3"]
+			tail = catsvg["tail"]["2"]
+			eye = catsvg["eye"]["15"][0]
+			mouth = catsvg["mouth"]["10"][0]
+			pattern=[]
+			pattern[0] = `<image xlink:href="img/2_3.jpg" clip-path="url(#tailFurClipPath)"></image>`
+			pattern[1] = `<image xlink:href="img/2_3.jpg" clip-path="url(#furClipPath)"></image>`
+			
+			let colorbar = ['rgb(227,174,86)','rgb(255,252,242)','rgb(120,159,207)']
+			
+			/*let colorbar = new Array()
+			for(let j = 0; j < 5; j++) {
+				let colorstr = 'rgb('
+				colorstr += Math.round(gen[x][5+j][0] * 255) + ','
+				colorstr += Math.round(gen[x][5+j][1] * 255) + ','
+				colorstr += Math.round(gen[x][5+j][2] * 255) + ')'
+				colorbar.push(colorstr)
+			}
+			console.log(colorbar)*/
+			
+			let colorSet = new Array();
+			/*pattern[0].match(/fill=\"(.*?)\"/g).forEach(function(path) {
+				if(colorSet.indexOf(path) == -1) {
+					if(path.slice(6,7)=='#'){
+						colorSet.push(path);
+					}
+				}
+			})
+			pattern[1].match(/fill=\"(.*?)\"/g).forEach(function(path) {
+				if(colorSet.indexOf(path) == -1) {
+					if(path.slice(6,7)=='#'){
+						colorSet.push(path);
+					}
+				}
+			})
+			colorSet.forEach(function(col,i) {
+				let colstr =  new RegExp(col,'g')
+				let newcolor = 'fill="'+colorbar[i]+'"'
+				pattern[0]=pattern[0].replace(colstr,newcolor)
+				pattern[1]=pattern[1].replace(colstr,newcolor)
+			})
+			eye=eye.replace(/stop-color=\"(.*?)\"/g,'stop-color="'+colorbar[1]+'"')
+			let eyelid = ''
+			eye.match(/fill=\"(.*?)\"/g).forEach(function(path) {
+				if(path.slice(6,7)!='n' && path.slice(6,7)!='u' && path.slice(7,13)!='31323d' && path.slice(7,13)!='31323D' && path.slice(7,10)!='fff'&& path.slice(7,10)!='FFF'){
+					eyelid=path;
+				}
+			})
+			if(eyelid){
+				let eyelidstr =  new RegExp(eyelid,'g')
+				console.log(eyelidstr)
+				console.log(colorbar[3])
+				eye=eye.replace(eyelidstr,'fill="'+colorbar[3]+'"')
+			}*/
+			
+			
+			var svg = svg1+tail[0]+svg2+pattern[0]+tail[1]+svg3+tail[2]+svg4+body[0]+pattern[1]+svg5+body[1]+svg6+eye+mouth+svg7
+			console.log(svg)
+			$("body").prepend(svg)
+		</script>
+	</body>
+
+</html>

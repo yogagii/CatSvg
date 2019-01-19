@@ -1,0 +1,172 @@
+<!--猫狗相叠加-->
+
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.pin {
+				width: 1000px;
+				height: 1000px;
+				position: relative;
+			}
+			
+			.dog {
+				width: 500px;
+				height: 500px;
+				position: absolute;
+				top: 20px;
+				/*left: 27px;*/
+				z-index: 3;
+			}
+			
+			.cat {
+				width: 600px;
+				height: 600px;
+				position: absolute;
+				top: -80px;
+				left: 10px;
+			}
+			.dog1 {
+				width: 500px;
+				height: 500px;
+				position: absolute;
+				top: 100;
+				left: 27px;
+				z-index: 2;
+			}
+			.ai{
+				width: 98%;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				background-color: white;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="pin">
+			<div>
+				<div class="cat"></div>
+				<div class="dog"></div>
+			</div>
+		</div>
+		<div class="svg-wrap">
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600px" height="600px"></svg>
+		</div>
+		<canvas id="canvas"></canvas>
+		<div id="png-container"></div>
+		
+		<script src="js/catsvg.js"></script>
+		<script src="js/dogsvg.js"></script>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script>
+			var svg1 = `<div class="ai"><svg viewBox="0 0 3000 3000" preserveAspectRatio="none">
+			<g clip-path="url(#kittyClipPath)">
+				<g id="tailFur">`
+			var svg2 = `<g clip-path="url(#tailFurClipPath)">`
+			var svg3 = `</g>
+				</g>`
+			var svg4 = `</g>
+			<g clip-path="url(#kittyClipPath)">
+				<g id="bodyFur">`
+			var svg5 = `</g>`
+			var svg6 = `</g>`
+			var svg7 = `</svg>`
+			
+			var svg8 = `<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">`
+			var svg9 = `</svg></div>`	
+			
+			var genku = [17,7,3,17,14]
+		
+			function savesvg(filename) {
+				var svgString1 = new XMLSerializer().serializeToString(document.querySelectorAll('svg')[0]);
+				var svgString2 = new XMLSerializer().serializeToString(document.querySelectorAll('svg')[1]);
+
+				var canvas = document.getElementById("canvas");
+				canvas.width = $('.svg-wrap svg').width();
+				canvas.height = $('.svg-wrap svg').height();
+				var ctx = canvas.getContext("2d");
+				var DOMURL = self.URL || self.webkitURL || self;
+				var img1 = new Image();
+				var svg1 = new Blob([svgString1], {type: "image/svg+xml;charset=utf-8"});
+				var url1 = DOMURL.createObjectURL(svg1);
+				
+				var img2 = new Image();
+				var svg2 = new Blob([svgString2], {type: "image/svg+xml;charset=utf-8"});
+				var url2 = DOMURL.createObjectURL(svg2);
+				img2.onload = function() {
+					//img1.onload = function(){
+						//ctx.drawImage(img2, 35, 100);
+						ctx.drawImage(img1, 0, 0);
+						ctx.drawImage(img2, 35, 100);
+						var png = canvas.toDataURL("image/png");
+						document.querySelector('#png-container').innerHTML = '<img src="'+png+'"/>';
+						var a = document.createElement('a');
+					
+						//console.log(canvas.toDataURL("image/png"))
+						a.download = "mix"+filename+".png"; //设定下载名称
+						a.href = canvas.toDataURL("image/png"); //将画布内的信息导出为png图片数据
+						a.click(); //点击触发下载
+						DOMURL.revokeObjectURL(png);	
+					//}
+				};
+				img1.src = url1;
+				img2.src = url2;
+			}
+			
+			var pattern = catsvg["pattern"]["4"]
+			var body = catsvg["body"]["4"]
+			var tail = catsvg["tail"]["1"]
+			var eye = dogsvg["eye"]["15"][0]
+			var mouth = dogsvg["mouth"]["15"][0]
+			
+			var csvg = svg1+tail[0]+svg2+pattern[0]+tail[1]+svg3+tail[2]+svg4+body[0]+pattern[1]+svg5+body[1]+svg6+svg7
+			var dsvg = svg8+eye+mouth+svg9
+			//console.log(svg)
+			//$(".cat").prepend(csvg)
+			//$(".dog").prepend(dsvg)
+			
+			window.onload = function(){
+				for(var i = 0; i < 10; i++) {
+					(function(i) { //立刻执行函数
+						setTimeout(function() {
+							console.log(i)
+							pattern = catsvg["pattern"][(i+5)%17+1]
+							body = catsvg["body"][i%7+1]
+							tail = catsvg["tail"][(i+1)%3+1]
+							eye = dogsvg["eye"][(i+13)%20+1][0]
+							mouth = dogsvg["mouth"][(i+11)%20+1][0]
+							//csvg = svg1+svg2+svg3+svg4+svg5+svg6+mouth+svg7
+							csvg = svg1+tail[0]+svg2+pattern[0]+tail[1]+svg3+tail[2]+svg4+body[0]+pattern[1]+svg5+body[1]+svg6+svg7
+							//dsvg = svg8+body+eye+svg9
+							dsvg = svg8+eye+mouth+svg9
+							
+							let catdom = document.getElementsByClassName("cat")[0]
+							let childs = catdom.childNodes; 
+							for(var m = childs.length - 1; m >= 0; m--) { 
+								catdom.removeChild(childs[m]); 
+							}
+							let dogdom = document.getElementsByClassName("dog")[0]
+							let childs2 = dogdom.childNodes; 
+							for(var n = childs2.length - 1; n >= 0; n--) { 
+								dogdom.removeChild(childs2[n]); 
+							}
+							
+							$(".cat").prepend(csvg)
+							$(".dog").prepend(dsvg)
+							setTimeout(function(){
+						    	savesvg(i+1150)
+						    },500)
+						}, i * 2000);
+					})(i);
+				}
+			}
+			
+		</script>
+	</body>
+
+</html>

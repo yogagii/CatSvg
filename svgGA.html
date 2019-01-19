@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div class="svg-wrap" style="width: 50%;">
+		</div>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script src="js/catsvg.js"></script>
+		<script src="js/matchcolours.js"></script>
+		<script>
+			console.log($(window).height())
+			console.log($(window).width())
+			
+			function deepClone(obj) {
+				if(Array.isArray(obj)){
+					let objClone = [];
+					if(obj && typeof obj === "object") {
+						for(key in obj) {
+							if(obj.hasOwnProperty(key)) {
+								if(obj[key] && typeof obj[key] === "object") {
+									objClone[key] = this.deepClone(obj[key]);
+								} else {
+									objClone[key] = obj[key];
+								}
+							}
+						}
+					}
+					return objClone;
+				}else{
+					return obj
+				}
+			}
+			
+			function savesvg(filename) {
+				var svgXml = $('.svg-wrap').html();
+				console.log(svgXml)
+
+				var image = new Image();
+				image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(svgXml))); //给图片对象写入base64编码的svg流
+
+				var canvas = document.createElement('canvas'); //准备空画布
+				canvas.width = $('.svg-wrap svg').width();
+				canvas.height = $('.svg-wrap svg').height();
+				console.log(canvas.width)
+
+				var context = canvas.getContext('2d'); //取得画布的2d绘图上下文
+				context.drawImage(image, 0, 0);
+
+				var a = document.createElement('a');
+
+				a.download = filename+".jpg"; //设定下载名称
+				a.href = canvas.toDataURL('image/jpeg'); //将画布内的信息导出为png图片数据
+				//a.click(); //点击触发下载
+			}
+
+			var p = ''
+			var svg1 = `<svg viewBox="0 0 3000 3000">
+			<g clip-path="url(#kittyClipPath)">
+				<g id="tailFur">`
+			var svg2 =`<g clip-path="url(#tailFurClipPath)">`
+			var svg3 = `</g>
+				</g>`
+			var svg4 = `</g>
+			<g clip-path="url(#kittyClipPath)">
+				<g id="bodyFur">`
+			var svg5 = `</g>`
+			var svg6 = `</g>`
+			var svg7 = `</svg>`
+			
+			var keys = [];
+			for(var p in colors) {
+				keys.push(p);
+			}
+			
+			pattern = []
+			//pattern = deepClone(catsvg["pattern"]["9"])
+			body = deepClone(catsvg["body"]["6"])
+			tail = deepClone(catsvg["tail"]["3"])
+			eye = catsvg["eye"]["15"][0]
+			mouth = catsvg["mouth"]["6"][0]
+			color = deepClone(colors[keys[9]]['rgb'])
+			//let colorbar = ['rgb(227,174,86)','rgb(255,252,242)','rgb(120,159,207)']
+			
+			let colorbar = new Array()
+			for(let j = 0; j < 5; j++) {
+				let colorstr = 'rgb('
+				colorstr += Math.round(color[j][0] * 255) + ','
+				colorstr += Math.round(color[j][1] * 255) + ','
+				colorstr += Math.round(color[j][2] * 255) + ')'
+				colorbar.push(colorstr)
+			}
+			console.log(colorbar)
+			
+			
+			/*let colorSet = new Array();
+			pattern[0].match(/fill=\"(.*?)\"/g).forEach(function(path) {
+				if(colorSet.indexOf(path) == -1) {
+					if(path.slice(6,7)=='#'){
+						colorSet.push(path);
+					}
+				}
+			})
+			pattern[1].match(/fill=\"(.*?)\"/g).forEach(function(path) {
+				if(colorSet.indexOf(path) == -1) {
+					if(path.slice(6,7)=='#'){
+						colorSet.push(path);
+					}
+				}
+			})
+			colorSet.forEach(function(col,i) {
+				let colstr =  new RegExp(col,'g')
+				let newcolor = 'fill="'+colorbar[i]+'"'
+				pattern[0]=pattern[0].replace(colstr,newcolor)
+				pattern[1]=pattern[1].replace(colstr,newcolor)
+			})*/
+			
+			
+			pattern[0] = `<image xlink:href="img/pattern/1_15.jpg" clip-path="url(#tailFurClipPath)"></image>`
+			pattern[1] = `<image xlink:href="img/pattern/1_15.jpg" clip-path="url(#furClipPath)"></image>`
+			
+			eye=eye.replace(/stop-color=\"(.*?)\"/g,'stop-color="'+colorbar[1]+'"')
+			let eyelid = ''
+			eye.match(/fill=\"(.*?)\"/g).forEach(function(path) {
+				if(path.slice(6,7)!='n' && path.slice(6,7)!='u' && path.slice(7,13)!='31323d' && path.slice(7,13)!='31323D' && path.slice(7,10)!='fff'&& path.slice(7,10)!='FFF'){
+					eyelid=path;
+				}
+			})
+			if(eyelid){
+				let eyelidstr =  new RegExp(eyelid,'g')
+				console.log(eyelidstr)
+				console.log(colorbar[3])
+				eye=eye.replace(eyelidstr,'fill="'+colorbar[3]+'"')
+			}
+			
+			
+			//var svg = svg1+tail[0]+svg2+pattern[0]+tail[1]+svg3+tail[2]+svg4+body[0]+pattern[1]+svg5+body[1]+svg6+eye+mouth+svg7
+			var svg = svg1+tail[0]+svg2+pattern[0]+tail[1]+svg3+tail[2]+svg4+body[0]+pattern[1]+svg5+body[1]+svg6+mouth+svg7
+			//console.log(svg)
+			$(".svg-wrap").prepend(svg)
+			/*setTimeout(function() {
+				savesvg('1')
+			},2000)*/
+		</script>
+	</body>
+
+</html>

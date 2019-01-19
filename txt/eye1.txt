@@ -1,0 +1,35 @@
+<g id="eye">
+					<defs>
+						<linearGradient id="eyeColor1" x2="0%" y2="100%">
+							<stop offset="0%" stop-color="#b8bdff"></stop>
+						</linearGradient>
+						<linearGradient id="eyeColor2" x2="0%" y2="100%">
+							<stop offset="0%" stop-color="#b8bdff"></stop>
+						</linearGradient>
+					</defs>
+					<defs>
+						<clipPath id="eyeClipPath">
+							<circle cx="1696" cy="1101.3" r="129.7" fill="#fff" stroke="#31323d" stroke-width="10" stroke-miterlimit="10" transform="translate(381.9 2638.3) rotate(-82.5)" stroke-linecap="round"></circle>
+						</clipPath>
+						<clipPath id="eyeClipPath2">
+							<circle cx="1168.9" cy="1127" r="129.7" fill="#fff" stroke="#31323d" stroke-width="10" stroke-miterlimit="10" transform="translate(-137.7 163) rotate(-7.5)" stroke-linecap="round"></circle>
+						</clipPath>
+					</defs>
+					<circle cx="1696" cy="1101.3" r="129.7" fill="#fff" transform="translate(381.9 2638.3) rotate(-82.5)"></circle>
+					<g clip-path="url(#eyeClipPath)">
+						<circle cx="1653.5" cy="1132.4" r="87.6" fill="url(#eyeColor1)" transform="translate(-134.2 226.5) rotate(-7.5)"></circle>
+						<circle cx="1657.1" cy="1133.7" r="64.7" fill="#31323d" transform="translate(-134.3 227) rotate(-7.5)"></circle>
+						<circle cx="1679.1" cy="1078.3" r="35.2" fill="#fff" transform="translate(-126.9 229.4) rotate(-7.5)"></circle>
+					</g>
+					<circle cx="1696" cy="1101.3" r="129.7" fill="none" stroke="#31323d" stroke-width="10" stroke-miterlimit="10" transform="translate(381.9 2638.3) rotate(-82.5)" stroke-linecap="round"></circle>
+					<path fill="none" stroke="#31323d" stroke-width="30" stroke-miterlimit="10" d="M1828.1 1011.3c-65.3 5.4-115.7-35.5-151.7-66.9" stroke-linecap="round"></path>
+					<circle cx="1168.9" cy="1127" r="129.7" fill="#fff" transform="translate(-137.7 163) rotate(-7.5)"></circle>
+					<g clip-path="url(#eyeClipPath2)">
+						<circle cx="1211.4" cy="1158.2" r="87.6" fill="url(#eyeColor2)" transform="translate(-141.4 168.8) rotate(-7.5)"></circle>
+						<circle cx="1215" cy="1159.4" r="64.7" fill="#31323d" transform="translate(-141.5 169.3) rotate(-7.5)"></circle>
+						<circle cx="1237.1" cy="1104" r="35.2" fill="#fff" transform="translate(-134 171.7) rotate(-7.5)"></circle>
+					</g>
+					<circle cx="1168.9" cy="1127" r="129.7" fill="none" stroke="#31323d" stroke-width="10" stroke-miterlimit="10" transform="translate(-137.7 163) rotate(-7.5)" stroke-linecap="round"></circle>
+					<path fill="none" stroke="#31323d" stroke-width="30" stroke-miterlimit="10" d="M1036.8 1037c65.3 5.4 115.7-35.5 151.7-66.9" stroke-linecap="round"></path>
+					</g>
+				</svg>
